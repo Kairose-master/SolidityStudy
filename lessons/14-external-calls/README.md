@@ -26,8 +26,20 @@ CallLab.sol을 컴파일하고 Counter를 먼저 배포한다. Counter 주소를
 
 Counter.increment에 owner 전용 제한을 넣으면 owner 계정의 직접 호출과 CounterCaller를 통한 호출은 결과가 달라진다. 외부 호출 시 권한이 자동 전달되지 않음을 확인한다. 이를 tx.origin 검사로 우회하지 않고, 허용할 호출 컨트랙트와 권한 범위를 명시적으로 설계한다.
 
-## SOL-014 예정 과제
+## SOL-014: 승인된 게임의 점수판
 
-예제 학습 뒤 운영자가 승인한 게임 컨트랙트만 점수를 기록할 수 있는 ScoreBoard와 인터페이스 기반 호출 컨트랙트를 설계한다. 아직 상세 과제를 출제하거나 제출받지 않았다.
+튜터가 제공한 ScoreBoard.sol을 배포하고, 학습자는 IScoreBoard와 TrainingGame을 작성했다. 생성자에서 주소에 코드가 있는지 검사하고 인터페이스로 저장한다. train은 주소별 한 번만 허용하며 trained를 먼저 변경하고 점수판에 호출자 10점을 기록한다. myScore는 인터페이스의 scores getter로 현재 호출자의 점수를 반환한다.
+
+점수판 owner는 setGame으로 게임 컨트랙트를 승인한다. 승인 전 train은 실패하며 trained도 되돌아가야 한다. 승인 후 사용자별 첫 훈련은 성공하고 중복 훈련과 사용자의 점수판 직접 호출은 거부되어야 한다.
+
+제출의 scores 인터페이스 선언에 view가 누락되어 수정했다. 수정본 기준 통과했으며 [제출과 채점 기록](../../submissions/SOL-014/README.md)에 원래 실수와 보안 답변을 보존했다.
+
+## 추가 질문에서 정리한 내용
+
+- IScoreBoard public board는 타입·공개 여부·변수 이름으로 구성된 선언이다. IScoreBoard(boardAddress)는 생성자 인자를 인터페이스 타입으로 변환한다.
+- 구현 소스가 있으면 Counter 같은 구체적인 컨트랙트 타입도 사용할 수 있다. 인터페이스는 필요한 함수만 선언할 수 있다.
+- 소스가 없어도 ABI 또는 알려진 함수 규격으로 호출할 수 있다. 주소만으로 정확한 ABI를 자동 복원할 수는 없다.
+- 저수준 call 성공만으로 의도한 함수의 실행을 보장할 수 없다. fallback이 대신 실행될 수도 있다.
+- tx.origin 검사 예제에서는 owner → 중간 컨트랙트 → 대상 순서의 호출이 권한 검사를 통과할 수 있음을 설명했다. 권한 검사에는 직접 호출자인 msg.sender를 사용한다.
 
 [Solidity 공식 문서: 외부 함수 호출](https://docs.soliditylang.org/en/latest/control-structures.html#external-function-calls)

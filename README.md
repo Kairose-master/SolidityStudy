@@ -26,13 +26,18 @@ Solidity 기초부터 스마트 컨트랙트 보안까지 단계적으로 학습
 | 11강 | 턴 기반 상태 머신과 불변식 | SOL-011 교대 결투 | 과제 보류 |
 | 12강 | 해시와 commit-reveal | SOL-012 비밀 선택 보관소 | 예제 학습 진행, 과제 미제출 |
 | 13강 | 시간 제한과 타임아웃 | SOL-013 기한이 있는 선택 공개 | 클리어 (개념 확인, 코드 제출 생략) |
-| 14강 | 컨트랙트 간 호출과 interface | SOL-014 예정 | 예제 학습 시작 |
+| 14강 | 컨트랙트 간 호출과 interface | SOL-014 승인된 게임의 점수판 | 수정 후 통과 |
+| 15강 | try/catch와 실패 복구 | TrainingWithRecovery | 예제 설명 완료 |
+| 16강 | 재진입과 CEI | ReentrancyLab | 예제 설명 완료 |
+| 17강 | nonReentrant 잠금 | GuardedRewardLab | 예제 설명 완료 |
+| 중간 과제 | 외부 호출·실패 복구·재진입 잠금 | RewardStation | 예시 답안 제공, 독립 제출 없음 |
 
 ## 디렉터리
 
 ```text
 lessons/       강의 브리프와 문제
 submissions/   통과한 제출 코드
+exercises/     중간 과제와 튜터 예시 답안
 ```
 
 전체 과정과 최종 과제 방향은 [ROADMAP.md](ROADMAP.md)에서 관리합니다.
