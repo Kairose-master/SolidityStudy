@@ -31,3 +31,12 @@ commit-reveal에는 commit 기한과 reveal 기한 모두 필요하다. 미제�
 통합 예제 학습 뒤 진행한다. 배포 시 commitDeadline, revealDeadline을 고정하고 commit은 첫 기한 전, reveal은 첫 기한 이상 두 번째 기한 미만에 허용한다. 두 참가자의 commitment가 있어야 공개할 수 있다. 두 번째 기한 이후 누구나 expire를 호출해 미완료 게임을 종료할 수 있게 한다. 양쪽 공개 완료로 정상 종료된 게임은 다시 만료 처리하지 않는다. 자산·보상·승패는 이번 연습에서 제외한다.
 
 [Solidity 공식 문서: 시간 단위와 블록 변수](https://docs.soliditylang.org/en/latest/units-and-global-variables.html)
+
+## 학습 결과 — 2026-09-24
+
+사용자 요청으로 SOL-013은 코드 제출을 생략하고 개념 확인으로 클리어 처리했다. 구현을 제출받거나 실행 검증한 것으로 기록하지 않는다.
+
+- 마감 전 reveal, 마감 이상 expire로 경계를 분리하는 이유를 설명했다.
+- 누구나 expire를 호출해도 정해진 조건과 동일한 상태 전이만 수행함을 확인했다.
+- 시간 제한으로 공개를 강제할 수 없으며 종료 트랜잭션 호출이 필요함을 확인했다.
+- 다음은 14강 컨트랙트 간 호출과 interface다.
