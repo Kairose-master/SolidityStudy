@@ -32,7 +32,40 @@
 - 에스크로 중 실제 NFT 소유자는 아레나이며, 경기 기록은 원래 플레이어와 토큰 ID를 보존한다.
 - 플레이어는 동시에 하나의 열린/진행 중 경기만 가질 수 있고, 같은 NFT를 두 경기에 등록할 수 없다.
 
-### 2. 경기 상태 머신
+### 함수 시그니처 힌트
+
+아래는 외부에서 호출될 함수의 모양을 제안한 것이다. 본문은 일부러 생략했으니 각 함수의 검증 순서와 상태 변경을 직접 설계한다. `IERC20`, `IERC721`, `IERC721Receiver`는 OpenZeppelin 인터페이스를 import해 사용한다.
+
+```solidity
+constructor(IERC20 paymentToken_, IERC721 heroToken_, uint256 entryFee_);
+
+function createMatch(uint256 heroTokenId)
+    external
+    returns (uint256 matchId);
+
+function joinMatch(uint256 matchId, uint256 heroTokenId) external;
+
+function attack(uint256 matchId) external;
+
+function cancelMatch(uint256 matchId) external;
+
+function claimReward() external;
+
+function claimHero(uint256 matchId, address recipient) external;
+
+function onERC721Received(
+    address operator,
+    address from,
+    uint256 tokenId,
+    bytes calldata data
+) external returns (bytes4);
+```
+
+생성자 외 함수의 `;`는 시그니처만 표시하기 위한 표기다. 실제 컨트랙트에서는 함수 본문을 작성한다. 필요하다면 인자나 이름을 바꿀 수 있지만, 바꾼 이유를 README에 적고 아래 테스트 조건은 모두 만족해야 한다. NFT 수신 콜백은 일반 사용자용 동작 함수와 역할이 다르므로, 임의의 NFT를 받아 잠기게 하지 않도록 검증 흐름을 설계한다.
+
+상태 변수 방향도 참고할 수 있다. 예를 들어 경기 ID별 `Match` mapping, 다음 경기 ID, 주소별 활성 경기 ID, 주소별 출금 가능 보상을 둘 수 있다. 어떤 필드가 필요한지는 불변식을 만족하도록 직접 결정한다.
+
+## 경기 상태 머신
 
 `enum`과 `struct`를 사용해 최소한 다음 상태와 정보를 관리한다.
 
