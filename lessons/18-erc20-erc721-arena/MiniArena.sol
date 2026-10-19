@@ -100,7 +100,7 @@ contract MiniArena is IERC721Receiver {
         address from,
         uint256 tokenId,
         bytes calldata
-    ) external view returns (bytes4) {
+    ) external view override returns (bytes4) {
         require(msg.sender == address(heroNFT), "Unsupported NFT");
         require(operator == address(this), "Unexpected operator");
         require(from == playerOfHero[tokenId], "Unexpected depositor");
