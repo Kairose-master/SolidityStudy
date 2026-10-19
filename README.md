@@ -34,6 +34,10 @@ Solidity 기초부터 스마트 컨트랙트 보안까지 단계적으로 학습
 | 18강 | ERC-20·ERC-721 승인과 에스크로, mapping 복습 | MiniArena 입장 시스템 | Foundry 예제 테스트 3개 통과, 독립 구현 미제출 |
 | 종합 과제 | ERC 토큰 기반 턴제 게임 통합 | SOL-019 Audit Arena 미니 결투 | 명세 제공, 독립 구현 대기; 따라 만들기 예제 제공 |
 
+## 확장 학습 트랙
+
+사용자가 요청한 ERC-4337 스마트 계정과 ERC-8004 에이전트 신뢰 학습 순서는 [확장 트랙 개요](lessons/20-account-abstraction-and-agents/README.md)에 정리했습니다. 로드맵은 [ROADMAP.md](ROADMAP.md)에서 확인할 수 있습니다.
+
 ## 디렉터리
 
 ```text
