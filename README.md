@@ -32,7 +32,7 @@ Solidity 기초부터 스마트 컨트랙트 보안까지 단계적으로 학습
 | 17강 | nonReentrant 잠금 | GuardedRewardLab | 예제 설명 완료 |
 | 중간 과제 | 외부 호출·실패 복구·재진입 잠금 | RewardStation | 예시 답안 제공, 독립 제출 없음 |
 | 18강 | ERC-20·ERC-721 승인과 에스크로, mapping 복습 | MiniArena 입장 시스템 | Foundry 예제 테스트 3개 통과, 독립 구현 미제출 |
-| 종합 과제 | ERC 토큰 기반 턴제 게임 통합 | SOL-019 Audit Arena 미니 결투 | 명세 제공, 학습자 구현 대기 |
+| 종합 과제 | ERC 토큰 기반 턴제 게임 통합 | SOL-019 Audit Arena 미니 결투 | 명세 제공, 독립 구현 대기; 따라 만들기 예제 제공 |
 
 ## 디렉터리
 
@@ -42,7 +42,7 @@ submissions/   통과한 제출 코드
 exercises/     중간 과제와 튜터 예시 답안
 ```
 
-전체 과정과 최종 과제 방향은 [ROADMAP.md](ROADMAP.md)에서 관리합니다. 현재 종합 과제 명세는 [SOL-019 Audit Arena 미니 결투](exercises/SOL-019-audit-arena-mini/README.md)입니다.
+전체 과정과 최종 과제 방향은 [ROADMAP.md](ROADMAP.md)에서 관리합니다. 현재 종합 과제 명세는 [SOL-019 Audit Arena 미니 결투](exercises/SOL-019-audit-arena-mini/README.md)이며, 별도의 [Foundry 따라 만들기 프로젝트](lessons/19-audit-arena-mini-guided/README.md)에서 실행 예제와 테스트를 확인할 수 있습니다.
 
 ## 채점 원칙
 
