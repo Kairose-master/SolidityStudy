@@ -29,6 +29,18 @@ ERC-721 영웅을 사용하는 1대1 턴제 온체인 게임을 설계한다.
 
 세부 사양과 불변식은 관련 개념을 배운 뒤 단계적으로 확정한다.
 
+## 확장 학습 트랙 — ERC-4337과 ERC-8004
+
+사용자 요청에 따라 게임 보안 과정과 병행할 에이전트/Web3 트랙을 추가한다. 상세 순서는 [확장 트랙 개요](lessons/20-account-abstraction-and-agents/README.md)에 기록한다.
+
+1. ERC-4337: Smart Contract Account, UserOperation, EntryPoint, Bundler
+2. Account 검증, 서명 해시, nonce와 재생 공격 방지
+3. Factory, Paymaster, gas sponsorship과 보안 검증
+4. ERC-8004: Identity, Reputation, Validation Registry
+5. ERC-4337 계정과 ERC-8004 에이전트 등록·검증을 연결하는 Foundry 실습
+
+2026-10-19에 확인한 공식 명세에서 ERC-8004는 Draft Standards Track이다. 진행 중인 표준이므로 각 강의 시작 시 최신 명세를 다시 확인한다. ERC-8004는 에이전트 식별/신뢰 신호 표준이며 결제 프로토콜 자체는 아니다.
+
 ## AI 사용 원칙
 
 - 튜터는 강의, 연습문제, 최종 과제의 요구사항과 보안 설계를 제공한다.
