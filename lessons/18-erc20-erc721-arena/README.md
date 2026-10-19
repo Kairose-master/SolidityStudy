@@ -31,6 +31,37 @@
 - 이 예제는 교육용으로 표준 ERC-20의 bool 반환과 신뢰할 수 있는 ERC-20/ERC-721 구현을 가정한다. 실제 배포에서는 OpenZeppelin의 SafeERC20 등 검증된 구현, 권한·위협 모델·자동화 테스트를 추가로 검토한다.
 - 이 컨트랙트에는 전투 판정과 상금 지급이 없다. Audit Arena 최종 과제의 완성 구현이 아니다.
 
+## Foundry에서 자동 실행 확인
+
+이 폴더는 OpenZeppelin ERC-20/ERC-721 토큰, MiniArena, 통합 테스트를 포함한 작은 Foundry 프로젝트다. 테스트가 토큰과 NFT를 실제로 배포하고 입장·퇴장 트랜잭션을 로컬 EVM에서 실행한다.
+
+```bash
+cd lessons/18-erc20-erc721-arena
+npm install
+npm test
+```
+
+`npm test`는 Solidity 0.8.24로 컴파일하고 다음을 확인한다.
+
+- 입장료가 보물고로 이동하고 NFT가 아레나에 보관되며 두 mapping이 예치자를 기록한다.
+- 퇴장 후 NFT와 mapping 기록이 정리된다.
+- NFT 승인을 빠뜨리면 전체 입장이 revert되고 앞서 처리한 ERC-20 입장료와 상태도 롤백된다.
+- 이미 입장한 플레이어는 두 번째 영웅을 동시에 맡길 수 없다.
+
+현재 확인 결과: 컴파일 성공, 3 tests passed. 이는 튜터 예시의 검증이며 학습자의 독립 과제 제출은 아니다.
+
+## Remix에서 직접 실행
+
+1. Remix workspace에 `MiniArena.sol`과 `DemoTokens.sol`을 연다. `DemoTokens.sol`의 OpenZeppelin npm import는 Remix가 직접 해석한다. 컴파일러를 0.8.24로 맞춘다.
+2. Remix VM에서 `DemoGameToken`을 배포한다. `initialHolder`는 현재 계정, `initialSupply`는 `100000000000000000000` (18 decimals 기준 100 AGT)로 입력한다.
+3. `DemoHeroNFT`를 배포하고 `mint(현재 계정)`을 호출한다. 첫 영웅의 ID는 1이다.
+4. `MiniArena`를 배포한다. 생성자에 GameToken 주소, HeroNFT 주소, 보물고로 쓸 두 번째 계정, `10000000000000000000` (10 AGT)를 넣는다.
+5. 플레이어 계정에서 GameToken의 `approve(MiniArena주소, 10000000000000000000)`과 HeroNFT의 `approve(MiniArena주소, 1)`을 각각 호출한다.
+6. MiniArena에서 `enterArena(1)`을 호출한다. `ownerOf(1)`은 MiniArena 주소, `heroOf(플레이어)`는 1, `playerOfHero(1)`은 플레이어, 보물고의 AGT 잔액은 10 AGT 증가해야 한다.
+7. `leaveArena()`를 호출한다. `ownerOf(1)`은 플레이어 주소로 돌아오고 플레이어의 아레나 상태와 mapping 기록은 초기값이 된다.
+
+Remix는 버전을 지정한 npm import 경로를 지원한다: [Remix import docs](https://remix-ide.readthedocs.io/en/latest/import.html). Foundry 테스트 실행 명령은 [Foundry 공식 문서](https://getfoundry.sh/forge/tests)에서 확인할 수 있다.
+
 ## 파일
 
 - 예제 코드: [MiniArena.sol](MiniArena.sol)
