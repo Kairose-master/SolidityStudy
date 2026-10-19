@@ -92,7 +92,8 @@
 - 사용자가 ERC-4337 Account Abstraction과 ERC-8004 Trustless Agents를 배우고 싶다고 요청했다.
 - 현재 로드맵은 `lessons/20-account-abstraction-and-agents/README.md`에 있다.
 - 순서: 4337의 UserOperation/EntryPoint/Bundler → Account 검증/nonce/Factory/Paymaster → 8004 Identity/Reputation/Validation → 두 표준을 연결한 Foundry 미니 프로젝트.
-- 2026-10-19 공식 EIP 명세를 확인했다. ERC-8004는 Draft Standards Track이므로 수업마다 최신 상태를 확인한다.
+- 2026-10-19 공식 EIP 명세를 확인했다. ERC-4337은 Final Standards Track이고 ERC-8004는 Draft Standards Track이므로 수업마다 최신 상태를 확인한다.
+- 오늘의 1강은 ERC-4337 UserOperation 개념, EOA 대비, Account/Bundler/EntryPoint/Paymaster 실행 흐름, replay 방지와 버전 주의점이다. 수업 노트: `lessons/20-account-abstraction-and-agents/lesson-01-useroperation.md`. 이해 확인 질문 답변 대기.
 
 ## 대기 중인 과제
 
