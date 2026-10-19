@@ -36,6 +36,14 @@ ERC-20 입장료를 받고 ERC-721 영웅을 에스크로에 맡긴 뒤, 플레�
 | 다른 주소가 퇴장 호출 | 실패 |
 | 예치 플레이어가 퇴장 | NFT가 플레이어에게 돌아가고 mapping 기록이 정리됨 |
 
+## 배포·실행 파일
+
+- [OpenZeppelin 기반 데모 토큰/NFT](../../lessons/18-erc20-erc721-arena/DemoTokens.sol)
+- [Foundry 설정과 테스트](../../lessons/18-erc20-erc721-arena/foundry.toml), [통합 테스트](../../lessons/18-erc20-erc721-arena/test/MiniArena.t.sol)
+- [Remix와 Foundry 실행 절차](../../lessons/18-erc20-erc721-arena/README.md#foundry에서-자동-실행-확인)
+
+데모 NFT의 `mint`는 누구나 호출할 수 있다. 학습과 로컬 실행용이며 실제 서비스의 발행 권한 설계로 사용하면 안 된다.
+
 ## 학습자가 확인할 질문
 
 1. 에스크로 중 실제 NFT 소유자와 게임상 예치자는 각각 누구인가?
