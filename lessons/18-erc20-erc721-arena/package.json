@@ -1,0 +1,11 @@
+{
+  "name": "solidity-study-mini-arena",
+  "private": true,
+  "scripts": {
+    "test": "forge test -vv"
+  },
+  "devDependencies": {
+    "@foundry-rs/forge": "1.7.1",
+    "@openzeppelin/contracts": "5.4.0"
+  }
+}
