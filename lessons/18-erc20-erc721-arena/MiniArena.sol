@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
+// ABI 규격만 선언한다. 실제 ERC-20 토큰은 별도 배포 후 주소로 연결해야 한다.
 interface IGameToken {
     function transferFrom(
         address from,
@@ -9,6 +10,7 @@ interface IGameToken {
     ) external returns (bool);
 }
 
+// ABI 규격만 선언한다. 실제 ERC-721 토큰은 별도 배포 후 주소로 연결해야 한다.
 interface IHeroNFT {
     function ownerOf(uint256 tokenId) external view returns (address);
 
