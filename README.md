@@ -31,6 +31,7 @@ Solidity 기초부터 스마트 컨트랙트 보안까지 단계적으로 학습
 | 16강 | 재진입과 CEI | ReentrancyLab | 예제 설명 완료 |
 | 17강 | nonReentrant 잠금 | GuardedRewardLab | 예제 설명 완료 |
 | 중간 과제 | 외부 호출·실패 복구·재진입 잠금 | RewardStation | 예시 답안 제공, 독립 제출 없음 |
+| 18강 | ERC-20·ERC-721 승인과 에스크로, mapping 복습 | MiniArena 입장 시스템 | 튜터 예시 제공, 독립 구현 미제출 |
 
 ## 디렉터리
 
