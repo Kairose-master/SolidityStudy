@@ -75,7 +75,9 @@
 - 17강: nonReentrant 잠금, modifier의 본문 뒤 실행, revert에 의한 잠금 상태 복구. `lessons/17-reentrancy-guard/`.
 - 중간 과제: RewardStation과 Accept/Reject/Reenter 모드 TestReceiver. 사용자 요청으로 완성 예시 답안 제공. `exercises/reward-station/`.
 - 15~17강 및 중간 과제의 학습자 실행 완료·독립 구현 제출은 확인하지 않았다. 예시 답안을 학습자 제출로 간주하지 않는다.
-- 다음에는 중간 예제 질문이나 실행 결과를 확인하거나 사용자 요청에 따라 다음 주제로 진행한다. 다음 강의는 아직 확정하지 않았다.
+- 18강: ERC-20 approve/transferFrom 입장료, ERC-721 approve/safeTransferFrom 에스크로, mapping 키와 기본값을 복습하고 MiniArena 예제를 제공했다. 예치 중 실제 NFT 소유자는 아레나이고 mapping은 예치 플레이어를 기록한다. 예제와 과제는 `lessons/18-erc20-erc721-arena/` 및 `exercises/mini-arena/`에 있다.
+- MiniArena 과제의 독립 구현과 실행 결과는 받지 않았다. 튜터 예제는 학습자 제출 또는 통과로 세지 않는다.
+- 다음에는 MiniArena 과제를 학습자가 직접 구현해 제출하면 채점한다. 다음 확장 주제로 게임 상태 머신과 전투 판정을 이어갈 수 있다.
 
 13강은 사용자 요청에 따라 개념 확인으로 클리어했다. SOL-013 코드 제출은 생략했으며 구현 검증을 수행한 것은 아니다. 쉬운 반복 과제는 강요하지 않고 새로운 개념으로 진행한다.
 
