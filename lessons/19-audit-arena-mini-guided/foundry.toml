@@ -1,0 +1,6 @@
+[profile.default]
+src = "src"
+test = "test"
+libs = ["node_modules"]
+solc_version = "0.8.24"
+remappings = ["@openzeppelin/contracts@5.4.0/=node_modules/@openzeppelin/contracts/"]
