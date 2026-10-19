@@ -96,12 +96,14 @@ contract MiniArena is IERC721Receiver {
     }
 
     function onERC721Received(
-        address,
-        address,
-        uint256,
+        address operator,
+        address from,
+        uint256 tokenId,
         bytes calldata
     ) external view returns (bytes4) {
         require(msg.sender == address(heroNFT), "Unsupported NFT");
+        require(operator == address(this), "Unexpected operator");
+        require(from == playerOfHero[tokenId], "Unexpected depositor");
         return IERC721Receiver.onERC721Received.selector;
     }
 }
