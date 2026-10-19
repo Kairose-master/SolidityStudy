@@ -87,6 +87,13 @@
 
 12강은 해시, salt, 주소별 commitment, reveal과 두 참가자 통합 예제를 설명했다. 학습자는 해시·salt·주소별 제출 실험을 완료했다고 확인했다. 통합 예제의 실행 완료나 SOL-012 제출은 아직 확인되지 않았으므로 과제 통과로 처리하지 않는다. constructor, address(this), 해시에 묶는 값, salt가 추가 비밀 인자라는 의미를 설명했다.
 
+## 신규 학습 목표: ERC-4337과 ERC-8004
+
+- 사용자가 ERC-4337 Account Abstraction과 ERC-8004 Trustless Agents를 배우고 싶다고 요청했다.
+- 현재 로드맵은 `lessons/20-account-abstraction-and-agents/README.md`에 있다.
+- 순서: 4337의 UserOperation/EntryPoint/Bundler → Account 검증/nonce/Factory/Paymaster → 8004 Identity/Reputation/Validation → 두 표준을 연결한 Foundry 미니 프로젝트.
+- 2026-10-19 공식 EIP 명세를 확인했다. ERC-8004는 Draft Standards Track이므로 수업마다 최신 상태를 확인한다.
+
 ## 대기 중인 과제
 
 ### SOL-019: Audit Arena 미니 결투 (신규 종합과제)
