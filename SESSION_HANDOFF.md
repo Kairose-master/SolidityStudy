@@ -77,6 +77,7 @@
 - 15~17강 및 중간 과제의 학습자 실행 완료·독립 구현 제출은 확인하지 않았다. 예시 답안을 학습자 제출로 간주하지 않는다.
 - 18강: ERC-20 approve/transferFrom 입장료, ERC-721 approve/safeTransferFrom 에스크로, mapping 키와 기본값을 복습하고 MiniArena 예제를 제공했다. Solidity의 `contract is Interface`는 인터페이스 함수를 구현한다는 뜻이며 구현 함수에 `override`가 필요하다는 점도 정리했다. MiniArena의 IGameToken/IHeroNFT는 로컬 ABI 선언일 뿐 실제 OpenZeppelin 토큰 구현을 import하거나 배포하지 않는다. 실행에는 별도 배포된 표준 토큰 주소가 필요함을 설명하고 과제 전제에 기록했다. 예치 중 실제 NFT 소유자는 아레나이고 mapping은 예치 플레이어를 기록한다. 예제와 과제는 `lessons/18-erc20-erc721-arena/` 및 `exercises/mini-arena/`에 있다.
 - MiniArena 과제의 독립 구현과 실행 결과는 받지 않았다. 튜터 예제는 학습자 제출 또는 통과로 세지 않는다.
+- OpenZeppelin 5.4.0 기반 DemoGameToken/DemoHeroNFT와 Foundry 프로젝트를 `lessons/18-erc20-erc721-arena/`에 추가했다. `npm install && npm test`로 Solidity 0.8.24 컴파일 및 통합 테스트 3개 통과를 확인했다. 테스트는 입장·퇴장, NFT 승인 누락 시 ERC-20/상태 롤백, 중복 입장 거부를 검증한다. 같은 README에 Remix VM 수동 배포·호출 흐름도 기록했다.
 - 다음에는 MiniArena 과제를 학습자가 직접 구현해 제출하면 채점한다. 다음 확장 주제로 게임 상태 머신과 전투 판정을 이어갈 수 있다.
 
 13강은 사용자 요청에 따라 개념 확인으로 클리어했다. SOL-013 코드 제출은 생략했으며 구현 검증을 수행한 것은 아니다. 쉬운 반복 과제는 강요하지 않고 새로운 개념으로 진행한다.
