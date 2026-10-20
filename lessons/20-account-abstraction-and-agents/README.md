@@ -21,6 +21,11 @@
 7. Bundler 시뮬레이션, 검증 제한과 보안 위협
 8. Foundry 예제로 최소 스마트 계정 호출 테스트
 
+### 진행 기록
+
+- 1강: [UserOperation과 실행 흐름](lesson-01-useroperation.md) — 완료 (2026-10-19)
+- 2강: [nonce와 replay 방지](lesson-02-nonce-replay.md) — 완료 (2026-10-20)
+
 ### B. ERC-8004
 
 1. Agent ID와 전역 식별자 agentRegistry + agentId
