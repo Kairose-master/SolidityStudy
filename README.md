@@ -36,7 +36,7 @@ Solidity 기초부터 스마트 컨트랙트 보안까지 단계적으로 학습
 
 ## 확장 학습 트랙
 
-사용자가 요청한 ERC-4337 스마트 계정과 ERC-8004 에이전트 신뢰 학습 순서는 [확장 트랙 개요](lessons/20-account-abstraction-and-agents/README.md)에 정리했습니다. 첫 수업은 [ERC-4337 UserOperation 흐름](lessons/20-account-abstraction-and-agents/lesson-01-useroperation.md)입니다. 로드맵은 [ROADMAP.md](ROADMAP.md)에서 확인할 수 있습니다.
+사용자가 요청한 ERC-4337 스마트 계정과 ERC-8004 에이전트 신뢰 학습 순서는 [확장 트랙 개요](lessons/20-account-abstraction-and-agents/README.md)에 정리했습니다. 1강은 [ERC-4337 UserOperation 흐름](lessons/20-account-abstraction-and-agents/lesson-01-useroperation.md), 2강은 [nonce와 replay 방지](lessons/20-account-abstraction-and-agents/lesson-02-nonce-replay.md)입니다. 로드맵은 [ROADMAP.md](ROADMAP.md)에서 확인할 수 있습니다.
 
 ## 디렉터리
 
