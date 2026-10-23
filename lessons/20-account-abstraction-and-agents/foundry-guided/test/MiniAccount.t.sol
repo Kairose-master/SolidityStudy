@@ -39,7 +39,7 @@ contract MiniAccountTest {
     uint256 private constant OWNER_KEY = 0xA11CE;
     uint256 private constant WRONG_KEY = 0xB0B;
     uint256 private constant SALT = 77;
-    uint128 private constant VERIFICATION_GAS = 500_000;
+    uint128 private constant VERIFICATION_GAS = 1_000_000;
     uint128 private constant CALL_GAS = 300_000;
     uint128 private constant PRIORITY_FEE = 1 gwei;
     uint128 private constant MAX_FEE = 2 gwei;
