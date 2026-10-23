@@ -65,7 +65,7 @@ contract MiniAccountTest {
         entryPoint.handleOps(ops, payable(address(this)));
 
         require(predicted.code.length != 0, "account not deployed");
-        require(MiniAccount(payable(predicted)).owner() == owner, "wrong owner");
+        require(MiniAccount(predicted).owner() == owner, "wrong owner");
         require(counter.count() == 1, "game call did not run");
     }
 
