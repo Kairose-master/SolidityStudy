@@ -53,7 +53,7 @@ contract MiniAccountFactory {
 
         address predicted = getAddress(owner, salt);
         if (predicted.code.length != 0) {
-            return MiniAccount(payable(predicted));
+            return MiniAccount(predicted);
         }
 
         account = new MiniAccount{salt: bytes32(salt)}(owner, entryPoint);
