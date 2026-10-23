@@ -77,7 +77,6 @@ import { ethers } from "https://cdn.jsdelivr.net/npm/ethers@6.13.5/+esm";
 
 const $ = (id) => document.getElementById(id);
 const state = (id, message, kind = "") => { const el = $(id); el.textContent = message; el.className = "state " + kind; };
-const short = (value) => value ? value.slice(0, 10) + "…" + value.slice(-8) : "-";
 let provider, wallet, entryPoint, factory, counter, ownerAddress, accountAddress;
 const salt = 77n;
 const verificationGas = 1_000_000n;
@@ -144,7 +143,7 @@ $("deploy").onclick = async () => {
     $("entry").textContent = epAddress;
     $("factory").textContent = factoryAddress;
     $("counterAddr").textContent = counterAddress;
-    accountAddress = await factory.getAddress(ownerAddress, salt);
+    accountAddress = await factory.getFunction("getAddress").staticCall(ownerAddress, salt);
     $("account").textContent = accountAddress;
     $("deployed").textContent = (await provider.getCode(accountAddress)) === "0x" ? "아니오" : "예";
     $("count").textContent = (await counter.count()).toString();
