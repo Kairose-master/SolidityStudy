@@ -98,6 +98,7 @@
 - 2026-10-21 3강: CREATE2 기반 counterfactual address, Factory/factoryData와 packed initCode, 첫 UserOperation의 배포 → 검증 → 실행 흐름. 노트: `lessons/20-account-abstraction-and-agents/lesson-03-factory-first-deployment.md`. 이해 확인 질문 답변 대기.
 - 2026-10-22 4강: Paymaster 검증과 postOp 정산, 실패 실행의 가스 부담, deposit과 stake의 구분 및 후원 정책 보안. 노트: `lessons/20-account-abstraction-and-agents/lesson-04-paymaster-gas-sponsorship.md`. 이해 확인 질문 답변 대기.
 - 2026-10-23 5강: Bundler의 수신·bundle 구성·제출 직전 반복 검증, validation/execution 분리, ERC-7562 기반 검증 DoS 방어와 실패 책임 추적. 노트: `lessons/20-account-abstraction-and-agents/lesson-05-bundler-simulation-validation.md`. 이해 확인 질문 답변 대기.
+- 2026-10-23 따라 치기 코드: `lessons/20-account-abstraction-and-agents/foundry-guided/`에 ERC-4337 v0.8.0 EntryPoint를 사용하는 Foundry 실습을 추가했다. `MiniAccount`, CREATE2 `MiniAccountFactory`, 정상 호출과 잘못된 서명 롤백 테스트가 포함된다. 현재 실행 환경에 Foundry가 없어 실제 `forge test` 결과는 확인하지 않았다.
 
 ## 대기 중인 과제
 
