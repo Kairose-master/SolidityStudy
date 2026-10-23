@@ -6,6 +6,14 @@ import {PackedUserOperation} from "@account-abstraction/interfaces/PackedUserOpe
 import {MiniAccount} from "../src/MiniAccount.sol";
 import {MiniAccountFactory} from "../src/MiniAccountFactory.sol";
 
+interface IAccountExecution {
+    function execute(
+        address target,
+        uint256 value,
+        bytes calldata data
+    ) external;
+}
+
 interface Vm {
     function addr(uint256 privateKey) external returns (address);
     function deal(address account, uint256 newBalance) external;
@@ -106,7 +114,7 @@ contract MiniAccountTest {
             abi.encodeCall(factory.createAccount, (owner, SALT))
         );
         op.callData = abi.encodeCall(
-            MiniAccount.execute,
+            IAccountExecution.execute,
             (
                 address(counter),
                 0,
