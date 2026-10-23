@@ -27,6 +27,7 @@
 - 2강: [nonce와 replay 방지](lesson-02-nonce-replay.md) — 완료 (2026-10-20)
 - 3강: [Factory와 스마트 계정의 첫 배포](lesson-03-factory-first-deployment.md) — 완료 (2026-10-21)
 - 4강: [Paymaster와 가스 후원](lesson-04-paymaster-gas-sponsorship.md) — 완료 (2026-10-22)
+- 5강: [Bundler 시뮬레이션과 검증 DoS 방어](lesson-05-bundler-simulation-validation.md) — 완료 (2026-10-23)
 
 ### B. ERC-8004
 
