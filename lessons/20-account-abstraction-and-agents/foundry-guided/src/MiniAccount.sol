@@ -3,6 +3,7 @@ pragma solidity ^0.8.28;
 
 import {BaseAccount} from "@account-abstraction/core/BaseAccount.sol";
 import {IEntryPoint} from "@account-abstraction/interfaces/IEntryPoint.sol";
+import {PackedUserOperation} from "@account-abstraction/interfaces/PackedUserOperation.sol";
 import {
     SIG_VALIDATION_FAILED,
     SIG_VALIDATION_SUCCESS
