@@ -29,6 +29,10 @@
 - 4강: [Paymaster와 가스 후원](lesson-04-paymaster-gas-sponsorship.md) — 완료 (2026-10-22)
 - 5강: [Bundler 시뮬레이션과 검증 DoS 방어](lesson-05-bundler-simulation-validation.md) — 완료 (2026-10-23)
 
+### 따라 치기 실습
+
+- [Foundry 스마트 계정 첫 UserOperation](foundry-guided/README.md): 공식 EntryPoint v0.8.0, CREATE2 Factory, 단일 소유자 계정, 정상·잘못된 서명 테스트.
+
 ### B. ERC-8004
 
 1. Agent ID와 전역 식별자 agentRegistry + agentId
