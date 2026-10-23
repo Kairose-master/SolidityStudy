@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ERC-4337 MiniAccount 로컬 데모</title>
+  <style>
+    :root { color-scheme: dark; --bg:#0b1020; --panel:#131b2e; --line:#29354f; --text:#edf2ff; --muted:#a7b3ca; --accent:#88a7ff; --green:#63d6a3; --red:#ff8291; }
+    * { box-sizing:border-box } body { margin:0; font:16px/1.55 system-ui,-apple-system,sans-serif; background:radial-gradient(ellipse at top,#192747,var(--bg) 55%); color:var(--text); }
+    main { max-width:980px; margin:40px auto; padding:0 20px 56px } h1 { font-size:clamp(27px,4vw,40px); margin:0 0 8px; letter-spacing:-.04em } h2 { margin:0 0 12px; font-size:20px } p { color:var(--muted) } code { color:#cbd7ff; overflow-wrap:anywhere }
+    .lead { max-width:720px; margin:0 0 24px } .warning { border:1px solid #806d37; background:#342d19; color:#ffe6a2; padding:12px 15px; border-radius:12px; margin:18px 0 24px }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px } .card { border:1px solid var(--line); background:rgba(19,27,46,.94); border-radius:16px; padding:20px; box-shadow:0 12px 40px #0002 }
+    .wide { grid-column:1/-1 } label { display:block; color:var(--muted); font-size:14px; margin:12px 0 6px } input { width:100%; color:var(--text); background:#0b1222; border:1px solid #384766; border-radius:9px; padding:11px 12px; font:14px ui-monospace,monospace }
+    button { border:0; border-radius:10px; background:var(--accent); color:#091126; padding:12px 16px; font-weight:750; cursor:pointer; margin-top:14px } button:disabled { opacity:.45; cursor:wait }
+    .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap } .pill { display:inline-block; border:1px solid var(--line); color:var(--muted); padding:3px 9px; border-radius:99px; font-size:13px }
+    .state { border-radius:10px; background:#0b1222; padding:12px; min-height:47px; white-space:pre-wrap; color:var(--muted); margin-top:12px }
+    .state.ok { color:var(--green) } .state.bad { color:var(--red) } .kv { display:grid; grid-template-columns:150px 1fr; gap:6px 12px; font-size:14px } .kv span:nth-child(odd) { color:var(--muted) }
+    ol { margin:8px 0 0; padding-left:23px; color:var(--muted) } li { padding:5px 0 } .small { font-size:13px } @media(max-width:700px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}.kv{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<main>
+  <div class="row"><span class="pill">Foundry + Anvil</span><span class="pill">ERC-4337 UserOperation</span></div>
+  <h1>스마트 계정에서 게임 동작 실행하기</h1>
+  <p class="lead">로컬 Anvil 체인에 EntryPoint, Factory, Counter를 배포하고, MiniAccount가 서명된 UserOperation으로 Counter를 올리는 과정을 화면에서 확인합니다.</p>
+  <div class="warning"><strong>로컬 연습 전용:</strong> Anvil이 출력한 테스트용 private key만 입력하세요. 실제 지갑 키를 입력하지 마세요. 이 페이지는 입력값을 저장하거나 외부 서버로 보내지 않고, RPC 요청은 로컬 Anvil로만 전송합니다.</div>
+
+  <div class="grid">
+    <section class="card">
+      <h2>1. 로컬 연결 및 배포</h2>
+      <label for="rpc">Anvil RPC 주소</label>
+      <input id="rpc" value="http://127.0.0.1:8545">
+      <label for="pk">Anvil 테스트 계정 private key</label>
+      <input id="pk" type="password" autocomplete="off" placeholder="anvil 터미널에 출력된 테스트 키">
+      <button id="deploy">Anvil에 연결하고 컨트랙트 배포</button>
+      <div id="deployState" class="state">Anvil을 먼저 실행한 뒤 테스트 키를 입력하세요.</div>
+    </section>
+
+    <section class="card">
+      <h2>배포 주소</h2>
+      <div class="kv">
+        <span>네트워크</span><code id="chain">-</code>
+        <span>소유자</span><code id="owner">-</code>
+        <span>EntryPoint</span><code id="entry">-</code>
+        <span>Factory</span><code id="factory">-</code>
+        <span>게임 Counter</span><code id="counterAddr">-</code>
+        <span>예측된 MiniAccount</span><code id="account">아직 계산 전</code>
+      </div>
+    </section>
+
+    <section class="card wide">
+      <h2>2. UserOperation 실행</h2>
+      <p>버튼을 누르면 예측 주소에 로컬 테스트 ETH를 넣고, UserOperation을 서명해 EntryPoint에 제출합니다.</p>
+      <div class="row">
+        <button id="run" disabled>UserOperation 보내기</button>
+        <span class="pill">Counter: <strong id="count">-</strong></span>
+        <span class="pill">계정 배포: <strong id="deployed">-</strong></span>
+      </div>
+      <div id="runState" class="state">먼저 컨트랙트를 배포하세요.</div>
+    </section>
+
+    <section class="card wide">
+      <h2>실행 순서</h2>
+      <ol>
+        <li>Factory가 owner와 salt로 스마트 계정 주소를 예측합니다.</li>
+        <li>EntryPoint가 initCode를 통해 Factory에 계정 생성을 요청합니다.</li>
+        <li>MiniAccount가 UserOperation 서명을 검사하고 가스비를 EntryPoint에 보냅니다.</li>
+        <li>EntryPoint가 MiniAccount.execute를 통해 Counter.increment를 호출합니다.</li>
+        <li>화면에서 계정 배포 여부와 Counter 값이 0에서 1로 변했는지 확인합니다.</li>
+      </ol>
+      <p class="small">이 데모는 로컬 체인의 상태만 바꿉니다. 실제 네트워크 배포나 실제 ETH 결제는 발생하지 않습니다.</p>
+    </section>
+  </div>
+</main>
+<script type="module">
+import { ethers } from "https://cdn.jsdelivr.net/npm/ethers@6.13.5/+esm";
+
+const $ = (id) => document.getElementById(id);
+const state = (id, message, kind = "") => { const el = $(id); el.textContent = message; el.className = "state " + kind; };
+const short = (value) => value ? value.slice(0, 10) + "…" + value.slice(-8) : "-";
+let provider, wallet, entryPoint, factory, counter, ownerAddress, accountAddress;
+const salt = 77n;
+const verificationGas = 1_000_000n;
+const callGas = 300_000n;
+const priorityFee = 1_000_000_000n;
+const maxFee = 2_000_000_000n;
+
+const entryPointAbi = [
+  "function getNonce(address sender,uint192 key) view returns (uint256)",
+  "function getUserOpHash((address sender,uint256 nonce,bytes initCode,bytes callData,bytes32 accountGasLimits,uint256 preVerificationGas,bytes32 gasFees,bytes paymasterAndData,bytes signature) userOp) view returns (bytes32)",
+  "function handleOps((address sender,uint256 nonce,bytes initCode,bytes callData,bytes32 accountGasLimits,uint256 preVerificationGas,bytes32 gasFees,bytes paymasterAndData,bytes signature)[] ops,address payable beneficiary)"
+];
+const factoryAbi = [
+  "function getAddress(address owner,uint256 salt) view returns (address)",
+  "function createAccount(address owner,uint256 salt) returns (address)"
+];
+const accountAbi = ["function execute(address target,uint256 value,bytes data)"];
+const counterAbi = [
+  "function count() view returns (uint256)",
+  "function increment()"
+];
+
+async function artifact(path) {
+  const response = await fetch("../out/" + path);
+  if (!response.ok) throw new Error("Forge artifact를 읽지 못했습니다: out/" + path + " (먼저 forge build 실행)");
+  return response.json();
+}
+function bytecodeOf(a) {
+  const code = typeof a.bytecode === "string" ? a.bytecode : a.bytecode?.object;
+  if (!code || code === "0x") throw new Error("Artifact에 배포 bytecode가 없습니다. forge build를 다시 실행하세요.");
+  return code.startsWith("0x") ? code : "0x" + code;
+}
+async function deployArtifact(path, name, args = []) {
+  const a = await artifact(path);
+  const c = await new ethers.ContractFactory(a.abi, bytecodeOf(a), wallet).deploy(...args, { gasLimit: 15_000_000n });
+  await c.waitForDeployment();
+  const address = await c.getAddress();
+  state("deployState", name + " 배포 완료: " + address, "ok");
+  return address;
+}
+
+$("deploy").onclick = async () => {
+  $("deploy").disabled = true;
+  try {
+    const rpc = $("rpc").value.trim();
+    const key = $("pk").value.trim();
+    if (!key) throw new Error("Anvil 테스트 private key를 입력하세요.");
+    provider = new ethers.JsonRpcProvider(rpc);
+    wallet = new ethers.Wallet(key, provider);
+    const network = await provider.getNetwork();
+    if (network.chainId !== 31337n) throw new Error("Anvil 로컬 체인이 아닙니다. 현재 chainId=" + network.chainId);
+    ownerAddress = await wallet.getAddress();
+    $("chain").textContent = "Anvil (31337)";
+    $("owner").textContent = ownerAddress;
+    state("deployState", "EntryPoint 배포 중…");
+    const epAddress = await deployArtifact("EntryPoint.sol/EntryPoint.json", "EntryPoint");
+    entryPoint = new ethers.Contract(epAddress, entryPointAbi, wallet);
+    state("deployState", "Factory 배포 중…");
+    const factoryAddress = await deployArtifact("MiniAccountFactory.sol/MiniAccountFactory.json", "Factory", [epAddress]);
+    factory = new ethers.Contract(factoryAddress, factoryAbi, wallet);
+    state("deployState", "게임 Counter 배포 중…");
+    const counterAddress = await deployArtifact("DemoCounter.sol/DemoCounter.json", "Counter");
+    counter = new ethers.Contract(counterAddress, counterAbi, wallet);
+    $("entry").textContent = epAddress;
+    $("factory").textContent = factoryAddress;
+    $("counterAddr").textContent = counterAddress;
+    accountAddress = await factory.getAddress(ownerAddress, salt);
+    $("account").textContent = accountAddress;
+    $("deployed").textContent = (await provider.getCode(accountAddress)) === "0x" ? "아니오" : "예";
+    $("count").textContent = (await counter.count()).toString();
+    $("run").disabled = false;
+    state("deployState", "준비 완료. UserOperation을 실행할 수 있어요.", "ok");
+    $("pk").value = "";
+  } catch (error) {
+    state("deployState", error.shortMessage || error.message || String(error), "bad");
+    $("deploy").disabled = false;
+  }
+};
+
+$("run").onclick = async () => {
+  $("run").disabled = true;
+  try {
+    state("runState", "UserOperation 구성 중…");
+    const factoryData = factory.interface.encodeFunctionData("createAccount", [ownerAddress, salt]);
+    const initCode = ethers.concat([await factory.getAddress(), factoryData]);
+    const executeData = new ethers.Interface(accountAbi).encodeFunctionData("execute", [
+      await counter.getAddress(),
+      0n,
+      counter.interface.encodeFunctionData("increment")
+    ]);
+    const userOp = {
+      sender: accountAddress,
+      nonce: await entryPoint.getNonce(accountAddress, 0),
+      initCode,
+      callData: executeData,
+      accountGasLimits: ethers.toBeHex((verificationGas << 128n) | callGas, 32),
+      preVerificationGas: 50_000n,
+      gasFees: ethers.toBeHex((priorityFee << 128n) | maxFee, 32),
+      paymasterAndData: "0x",
+      signature: "0x"
+    };
+
+    state("runState", "미배포 계정 주소에 테스트 ETH를 보내는 중…");
+    const funding = await wallet.sendTransaction({ to: accountAddress, value: ethers.parseEther("0.02") });
+    await funding.wait();
+
+    state("runState", "UserOperation hash 생성 및 로컬 서명 중…");
+    const hash = await entryPoint.getUserOpHash(userOp);
+    userOp.signature = wallet.signingKey.sign(hash).serialized;
+
+    state("runState", "EntryPoint.handleOps 실행 중…");
+    const tx = await entryPoint.handleOps([userOp], ownerAddress, { gasLimit: 8_000_000n });
+    await tx.wait();
+
+    const count = await counter.count();
+    const code = await provider.getCode(accountAddress);
+    $("count").textContent = count.toString();
+    $("deployed").textContent = code === "0x" ? "아니오" : "예";
+    state("runState", "성공! tx " + tx.hash + "\nCounter가 " + count + "이 됐습니다.", "ok");
+  } catch (error) {
+    state("runState", error.shortMessage || error.reason || error.message || String(error), "bad");
+  } finally {
+    $("run").disabled = false;
+  }
+};
+</script>
+</body>
+</html>
