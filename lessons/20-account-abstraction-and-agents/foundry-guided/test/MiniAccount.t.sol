@@ -127,7 +127,7 @@ contract MiniAccountTest {
     function _sign(
         PackedUserOperation memory op,
         uint256 privateKey
-    ) private view returns (bytes memory signature) {
+    ) private returns (bytes memory signature) {
         bytes32 userOpHash = entryPoint.getUserOpHash(op);
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(privateKey, userOpHash);
         signature = abi.encodePacked(r, s, v);
